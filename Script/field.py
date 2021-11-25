@@ -12,7 +12,8 @@ import var
 import start
 
 def manage():
-    camera_adjust()
+    camera_adjust_x()
+    camera_adjust_y()
     display()
     key_press_handle()
     player_move()
@@ -35,8 +36,42 @@ def player_move():
             var.Player_Field.moving = False
             var.Player_Field.moved = 0
 
-def camera_adjust():
-    pass
+def camera_adjust_x():
+    if var.Field.size[0] < 1280:
+        var.Camera.x = -1 * (640 - var.Field.size[0] // 2)
+        return None
+
+    visual_x = var.Player_Field.position[0] - var.Camera.x
+    visual_x_diff = 560 - visual_x
+    var.Camera.x -= visual_x_diff
+
+    if var.Camera.x <= 0:
+        var.Camera.x = 0
+        return None
+
+    if 1280 + var.Camera.x >= var.Field.size[0]:
+        var.Camera.x = var.Field.size[0] - 1280
+        return None
+
+    return None
+
+def camera_adjust_y():
+    if var.Field.size[1] < 800:
+        var.Camera.x = -1 * (400 - var.Field.size[0] // 2)
+        return None
+
+    visual_y = var.Player_Field.position[1] - var.Camera.y
+    visual_y_diff = 320 - visual_y
+    var.Camera.y -= visual_y_diff
+
+    if var.Camera.y <= 0:
+        var.Camera.y = 0
+
+    if 800 + var.Camera.y >= var.Field.size[1]:
+        var.Camera.y = var.Field.size[1] - 800
+        return None
+
+    return None
 
 def mouse_handle():
     pass

@@ -14,6 +14,7 @@ class Camera():
 
 class Field():
     place = 'home_town'
+    size = [1280, 1280]
 
 class Player_Field():
     position = [320, 400]
