@@ -1,6 +1,8 @@
 screen = None
 
 scene = 'title'
+state = ''
+state_inventory = ''
 
 class Input():
     class Keyboard():

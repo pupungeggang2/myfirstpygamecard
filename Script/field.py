@@ -22,6 +22,10 @@ def display():
     var.screen.fill(design.Color.white)
     df.terrain_display()
     df.player_display()
+
+    if var.state == 'inventory':
+        df.inventory_display()
+
     pygame.display.flip()
 
 def player_move():
@@ -74,15 +78,36 @@ def camera_adjust_y():
     return None
 
 def mouse_handle():
-    pass
+    mouse = pygame.mouse.get_pos()
+
+    if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.skill_tab[0], UI.Field.skill_tab[1], UI.Field.skill_tab[2], UI.Field.skill_tab[3]):
+        var.state_inventory = 'skill_tree'
+
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.card_tab[0], UI.Field.card_tab[1], UI.Field.card_tab[2], UI.Field.card_tab[3]):
+        var.state_inventory = 'card'
+
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.deck_tab[0], UI.Field.deck_tab[1], UI.Field.deck_tab[2], UI.Field.deck_tab[3]):
+        var.state_inventory = 'deck'
+
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.equip_tab[0], UI.Field.equip_tab[1], UI.Field.equip_tab[2], UI.Field.equip_tab[3]):
+        var.state_inventory = 'equip'
+
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.item_tab[0], UI.Field.item_tab[1], UI.Field.item_tab[2], UI.Field.item_tab[3]):
+        var.state_inventory = 'item'
 
 def key_down_handle():
-    pass
+    if var.Input.Keyboard.key == 105:
+        if var.state == 'inventory':
+            var.state = ''
+        elif var.state == '':
+            var.state = 'inventory'
+            var.state_inventory = ''
 
 def key_press_handle():
     direction = {97 : 'left', 100 : 'right', 119 : 'up', 115 : 'down'}
 
-    if var.Input.Keyboard.key_press == 97 or var.Input.Keyboard.key_press == 100 or var.Input.Keyboard.key_press == 119 or var.Input.Keyboard.key_press == 115: 
-        if var.Player_Field.moving == False:
-            var.Player_Field.face = direction[var.Input.Keyboard.key]
-            var.Player_Field.moving = True
+    if var.state == '':
+        if var.Input.Keyboard.key_press == 97 or var.Input.Keyboard.key_press == 100 or var.Input.Keyboard.key_press == 119 or var.Input.Keyboard.key_press == 115: 
+            if var.Player_Field.moving == False:
+                var.Player_Field.face = direction[var.Input.Keyboard.key]
+                var.Player_Field.moving = True
