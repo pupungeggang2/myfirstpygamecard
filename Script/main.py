@@ -19,7 +19,7 @@ def init():
 
 def main():
     while True:
-        clock.tick(30)
+        clock.tick(var.FPS)
         manage()
         input_handle()
 
@@ -39,6 +39,9 @@ def input_handle():
             if event.type == pygame.MOUSEBUTTONUP:
                 if var.scene == 'title':
                     title.mouse_up_handle()
+
+                elif var.scene == 'field':
+                    field.mouse_up_handle()
 
             if var.Input.Keyboard.enabled == True:
                 if event.type == pygame.KEYDOWN:

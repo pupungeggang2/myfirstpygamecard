@@ -4,6 +4,7 @@ import UI
 import design
 
 import inputfunction as iff
+import fieldfunction as ff
 
 import var
 
@@ -27,3 +28,4 @@ def mouse_up_handle():
 
     if iff.point_inside_rect(mouse[0], mouse[1], UI.Title.new_game_button[0], UI.Title.new_game_button[1], UI.Title.new_game_button[2], UI.Title.new_game_button[3]):
         start.start_field()
+        ff.field_load('home_town')

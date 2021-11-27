@@ -3,9 +3,11 @@ import pygame
 place = {}
 hero = {}
 inventory_tab = {}
+card = {}
 
 def image_load():
     place['home_town'] = pygame.image.load('../Image/Place/HomeTown.png')
+    place['field_1'] = pygame.image.load('../Image/Place/Field01.png')
 
     hero['left'] = pygame.image.load('../Image/Character/HeroLeft.png')
     hero['right'] = pygame.image.load('../Image/Character/HeroRight.png')
@@ -17,3 +19,5 @@ def image_load():
     inventory_tab['deck'] = pygame.image.load('../Image/DeckTab.png')
     inventory_tab['equip'] = pygame.image.load('../Image/EquipTab.png')
     inventory_tab['item'] = pygame.image.load('../Image/ItemTab.png')
+
+    card['card_frame'] = pygame.image.load('../Image/Card/CardFrame.png')

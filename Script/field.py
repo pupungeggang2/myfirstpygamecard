@@ -5,7 +5,7 @@ import design
 
 import inputfunction as iff
 import fieldfunction as ff
-import displayfield as df
+import displayfunction as df
 
 import var
 
@@ -29,10 +29,10 @@ def display():
     pygame.display.flip()
 
 def player_move():
-    direction = {'left' : [-8, 0], 'right' : [8, 0], 'up' : [0, -8], 'down' : [0, 8]}
+    direction = {'left' : [-16, 0], 'right' : [16, 0], 'up' : [0, -16], 'down' : [0, 16]}
 
     if var.Player_Field.moving == True:
-        var.Player_Field.moved += 8
+        var.Player_Field.moved += 16
         var.Player_Field.position[0] += direction[var.Player_Field.face][0]
         var.Player_Field.position[1] += direction[var.Player_Field.face][1]
 
@@ -77,22 +77,23 @@ def camera_adjust_y():
 
     return None
 
-def mouse_handle():
+def mouse_up_handle():
     mouse = pygame.mouse.get_pos()
 
-    if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.skill_tab[0], UI.Field.skill_tab[1], UI.Field.skill_tab[2], UI.Field.skill_tab[3]):
+    if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.skill_tab[0], UI.Field.Inventory.skill_tab[1], UI.Field.Inventory.skill_tab[2], UI.Field.Inventory.skill_tab[3]):
         var.state_inventory = 'skill_tree'
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.card_tab[0], UI.Field.card_tab[1], UI.Field.card_tab[2], UI.Field.card_tab[3]):
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.card_tab[0], UI.Field.Inventory.card_tab[1], UI.Field.Inventory.card_tab[2], UI.Field.Inventory.card_tab[3]):
         var.state_inventory = 'card'
+        var.inventory_page = 0
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.deck_tab[0], UI.Field.deck_tab[1], UI.Field.deck_tab[2], UI.Field.deck_tab[3]):
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.deck_tab[0], UI.Field.Inventory.deck_tab[1], UI.Field.Inventory.deck_tab[2], UI.Field.Inventory.deck_tab[3]):
         var.state_inventory = 'deck'
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.equip_tab[0], UI.Field.equip_tab[1], UI.Field.equip_tab[2], UI.Field.equip_tab[3]):
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.equip_tab[0], UI.Field.Inventory.equip_tab[1], UI.Field.Inventory.equip_tab[2], UI.Field.Inventory.equip_tab[3]):
         var.state_inventory = 'equip'
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.item_tab[0], UI.Field.item_tab[1], UI.Field.item_tab[2], UI.Field.item_tab[3]):
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.item_tab[0], UI.Field.Inventory.item_tab[1], UI.Field.Inventory.item_tab[2], UI.Field.Inventory.item_tab[3]):
         var.state_inventory = 'item'
 
 def key_down_handle():
@@ -107,7 +108,12 @@ def key_press_handle():
     direction = {97 : 'left', 100 : 'right', 119 : 'up', 115 : 'down'}
 
     if var.state == '':
-        if var.Input.Keyboard.key_press == 97 or var.Input.Keyboard.key_press == 100 or var.Input.Keyboard.key_press == 119 or var.Input.Keyboard.key_press == 115: 
+        if var.Input.Keyboard.key_press == 97 or var.Input.Keyboard.key_press == 100 or var.Input.Keyboard.key_press == 119 or var.Input.Keyboard.key_press == 115:
+            ff.field_move()
+
             if var.Player_Field.moving == False:
                 var.Player_Field.face = direction[var.Input.Keyboard.key]
-                var.Player_Field.moving = True
+
+                if ff.collision_check() == False:
+                    var.Player_Field.moving = True
+                    var.Player_moved = 0

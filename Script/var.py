@@ -1,8 +1,10 @@
 screen = None
+FPS = 40
 
 scene = 'title'
 state = ''
 state_inventory = ''
+inventory_page = 0
 
 class Input():
     class Keyboard():
@@ -17,6 +19,9 @@ class Camera():
 class Field():
     place = 'home_town'
     size = [1280, 1280]
+    wall = []
+    interaction = []
+    connection = []
 
 class Player_Field():
     position = [320, 400]
@@ -35,7 +40,7 @@ class Player_Info():
     decks = {}
 
     class Inventory():
-        card = []
+        card = [[1001, 2, 0], [1002, 2, 0]]
         equip = []
         item = []
 
