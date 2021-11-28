@@ -22,6 +22,7 @@ def display():
     var.screen.fill(design.Color.white)
     df.terrain_display()
     df.player_display()
+    df.enemy_display()
 
     if var.state == 'inventory':
         df.inventory_display()
@@ -39,6 +40,13 @@ def player_move():
         if var.Player_Field.moved >= 80:
             var.Player_Field.moving = False
             var.Player_Field.moved = 0
+
+            enemy_collide_check()
+
+def enemy_collide_check():
+    for i in range(len(var.Field.enemy)):
+        if var.Player_Field.position[0] == var.Field.enemy[i][0][0] and var.Player_Field.position[1] == var.Field.enemy[i][0][1]:
+            start.start_battle()
 
 def camera_adjust_x():
     if var.Field.size[0] < 1280:

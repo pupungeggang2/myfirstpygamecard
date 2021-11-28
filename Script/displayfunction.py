@@ -13,6 +13,10 @@ def terrain_display():
 def player_display():
     var.screen.blit(img.hero[var.Player_Field.face], [var.Player_Field.position[0] - var.Camera.x, var.Player_Field.position[1] - var.Camera.y])
 
+def enemy_display():
+    for i in range(len(var.Field.enemy)):
+        var.screen.blit(img.enemy['enemy'], [var.Field.enemy[i][0][0] - var.Camera.x, var.Field.enemy[i][0][1] - var.Camera.y])
+
 def draw_card(card, position):
     var.screen.blit(img.card['card_frame'], position)
 

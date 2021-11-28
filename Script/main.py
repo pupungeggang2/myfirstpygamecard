@@ -1,5 +1,6 @@
 import sys
 import pygame
+import traceback
 
 import img
 import var
@@ -8,6 +9,7 @@ import start
 
 import title
 import field
+import battle
 
 clock = pygame.time.Clock()
 
@@ -30,6 +32,9 @@ def manage():
     elif var.scene == 'field':
         field.manage()
 
+    elif var.scene == 'battle':
+        battle.manage()
+
 def input_handle():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -47,6 +52,9 @@ def input_handle():
                 if event.type == pygame.KEYDOWN:
                     var.Input.Keyboard.key = event.key
 
+                    if var.Input.Keyboard.key == pygame.K_ESCAPE:
+                        sys.exit()
+
                     if var.Input.Keyboard.key_press == -1:
                         var.Input.Keyboard.key_press = event.key
 
@@ -56,5 +64,11 @@ def input_handle():
                 elif event.type == pygame.KEYUP:
                     var.Input.Keyboard.key_press = -1 
 
-init()
-main()
+try:
+    init()
+    main()
+
+except:
+    print(var.Player_Field.position)
+    print(var.Field.connection)
+    traceback.print_exc()
