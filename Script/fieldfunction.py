@@ -74,5 +74,8 @@ def field_move():
 
                 var.Field.place = var.Field.connection[i][2]
                 field_load(var.Field.place)
+                var.Animation.place_box = True
+                var.Animation.place_box_tick = 0
+                var.Animation.place_box_rect = [40, -120, 240, 80]
 
                 break

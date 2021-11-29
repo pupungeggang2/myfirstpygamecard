@@ -100,5 +100,6 @@ connection = {
 
 enemy = {
     'home_town' : [],
-    'field_1' : [[[1280, 800], 1001]]
+    'field_1' : [[[1280, 800], 1001]],
+    'field_village' : []
 }

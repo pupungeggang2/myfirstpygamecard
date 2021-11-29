@@ -6,6 +6,7 @@ npc = {}
 enemy = {}
 inventory_tab = {}
 card = {}
+card_back = {}
 
 def image_load():
     place['home_town'] = pygame.image.load('../Image/Place/HomeTown.png')
@@ -26,3 +27,5 @@ def image_load():
     inventory_tab['item'] = pygame.image.load('../Image/ItemTab.png')
 
     card['card_frame'] = pygame.image.load('../Image/Card/CardFrame.png')
+
+    card_back['basic_1'] = pygame.image.load('../Image/Card/CardBack01.png')

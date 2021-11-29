@@ -6,6 +6,11 @@ state = ''
 state_inventory = ''
 inventory_page = 0
 
+class Animation():
+    place_box = False
+    place_box_tick = 0
+    place_box_rect = [40, -120, 240, 80]
+
 class Input():
     class Keyboard():
         enabled = True
@@ -37,10 +42,10 @@ class Player_Info():
 
     skill_tree = []
 
-    decks = {}
+    deck = [{'name' : 'basic_deck', 'back' : 'basic_1', 'card' : [[1001, 2, 0], [1002, 2, 0], [1003, 2, 0], [1004, 2, 0]]}]
 
     class Inventory():
-        card = [[1001, 2, 0], [1002, 2, 0]]
+        card = [[1001, 2, 0], [1002, 2, 0], [1003, 2, 0], [1004, 2, 0]]
         equip = []
         item = []
 

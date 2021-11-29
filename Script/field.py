@@ -14,6 +14,7 @@ import start
 def manage():
     camera_adjust_x()
     camera_adjust_y()
+    df.place_animation_handle()
     display()
     key_press_handle()
     player_move()
@@ -23,6 +24,7 @@ def display():
     df.terrain_display()
     df.player_display()
     df.enemy_display()
+    df.place_display()
 
     if var.state == 'inventory':
         df.inventory_display()
