@@ -16,4 +16,6 @@ def manage():
 def display():
     var.screen.fill(design.Color.white)
     df.battle_field_display()
+    if var.state == 'start':
+        df.battle_start_display()
     pygame.display.flip()

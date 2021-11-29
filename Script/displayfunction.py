@@ -86,6 +86,10 @@ def inventory_deck_display():
             var.screen.blit(img.card_back[var.Player_Info.deck[i]['back']], UI.Field.Inventory.card_list[i][:2])
             var.screen.blit(design.Font.card_name.render(var.Player_Info.deck[i]['name'], True, design.Color.black), UI.Field.Inventory.deck_text[i])
 
+def battle_start_display():
+    pygame.draw.rect(var.screen, design.Color.white, UI.Battle.Start.rect)
+    pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Start.rect, 2)
+
 def battle_field_display():
     for i in range(14):
         pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Field.cell_list[i], 2)

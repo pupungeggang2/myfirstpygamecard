@@ -48,6 +48,7 @@ def player_move():
 def enemy_collide_check():
     for i in range(len(var.Field.enemy)):
         if var.Player_Field.position[0] == var.Field.enemy[i][0][0] and var.Player_Field.position[1] == var.Field.enemy[i][0][1]:
+            var.Enemy_Battle.ID = var.Field.enemy[i][1]
             start.start_battle()
 
 def camera_adjust_x():

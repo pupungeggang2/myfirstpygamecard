@@ -4,6 +4,7 @@ FPS = 40
 scene = 'title'
 state = ''
 state_inventory = ''
+state_player = 'portrait'
 inventory_page = 0
 
 class Animation():
@@ -43,6 +44,7 @@ class Player_Info():
     skill_tree = []
 
     deck = [{'name' : 'basic_deck', 'back' : 'basic_1', 'card' : [[1001, 2, 0], [1002, 2, 0], [1003, 2, 0], [1004, 2, 0]]}]
+    selected_deck = 0
 
     class Inventory():
         card = [[1001, 2, 0], [1002, 2, 0], [1003, 2, 0], [1004, 2, 0]]
@@ -57,4 +59,9 @@ class Player_Battle():
     deck = []
 
 class Enemy_Battle():
+    ID = 0
     AI_type = 0
+    
+class Battle():
+    turn_number = 0
+    field = [None, None, None, None, None, None, None, None, None, None, None, None, None, None]
