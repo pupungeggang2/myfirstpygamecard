@@ -15,8 +15,13 @@ def manage():
     camera_adjust_x()
     camera_adjust_y()
     df.place_animation_handle()
+
+    if var.Animation.scene_transition == True:
+        df.screen_transition_to_battle_handle()
+
     display()
     key_press_handle()
+    scene_change()
     player_move()
 
 def display():
@@ -28,6 +33,8 @@ def display():
 
     if var.state == 'inventory':
         df.inventory_display()
+
+    df.scene_transtition_display()
 
     pygame.display.flip()
 
@@ -49,7 +56,17 @@ def enemy_collide_check():
     for i in range(len(var.Field.enemy)):
         if var.Player_Field.position[0] == var.Field.enemy[i][0][0] and var.Player_Field.position[1] == var.Field.enemy[i][0][1]:
             var.Enemy_Battle.ID = var.Field.enemy[i][1]
-            start.start_battle()
+            var.Field.enemy.pop(i)
+            scene_transition_to_battle()
+
+def scene_transition_to_battle():
+    var.Animation.scene_transition = True
+    var.Input.mouse_enabled = False
+    var.Input.Keyboard.enabled = False
+
+def scene_change():
+    if var.Animation.scene_transition == True and var.Animation.scene_transition_tick >= var.FPS:
+        start.start_battle()
 
 def camera_adjust_x():
     if var.Field.size[0] < 1280:

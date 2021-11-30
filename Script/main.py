@@ -42,11 +42,12 @@ def input_handle():
 
         else:
             if event.type == pygame.MOUSEBUTTONUP:
-                if var.scene == 'title':
-                    title.mouse_up_handle()
+                if var.Input.mouse_enabled == True:
+                    if var.scene == 'title':
+                        title.mouse_up_handle()
 
-                elif var.scene == 'field':
-                    field.mouse_up_handle()
+                    elif var.scene == 'field':
+                        field.mouse_up_handle()
 
             if var.Input.Keyboard.enabled == True:
                 if event.type == pygame.KEYDOWN:
@@ -62,7 +63,10 @@ def input_handle():
                         field.key_down_handle()
 
                 elif event.type == pygame.KEYUP:
-                    var.Input.Keyboard.key_press = -1 
+                    var.Input.Keyboard.key_press = -1
+
+    if var.Input.Keyboard.enabled == False:
+        var.Input.Keyboard.key_press = -1
 
 try:
     init()

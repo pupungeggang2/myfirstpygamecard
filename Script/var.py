@@ -11,8 +11,13 @@ class Animation():
     place_box = False
     place_box_tick = 0
     place_box_rect = [40, -120, 240, 80]
+    scene_transition = False
+    scene_transition_tick = 0
+    scene_transition_rect = [0, -800, 1280, 800]
 
 class Input():
+    mouse_enabled = True
+
     class Keyboard():
         enabled = True
         key = -1
@@ -43,11 +48,11 @@ class Player_Info():
 
     skill_tree = []
 
-    deck = [{'name' : 'basic_deck', 'back' : 'basic_1', 'card' : [[1001, 2, 0], [1002, 2, 0], [1003, 2, 0], [1004, 2, 0]]}]
+    deck = [{'name' : 'basic_deck', 'back' : 'basic_1', 'card' : [[10001, 2, 0], [10002, 2, 0], [10003, 2, 0], [10004, 2, 0]]}]
     selected_deck = 0
 
     class Inventory():
-        card = [[1001, 2, 0], [1002, 2, 0], [1003, 2, 0], [1004, 2, 0]]
+        card = [[10001, 2, 0], [10002, 2, 0], [10003, 2, 0], [10004, 2, 0]]
         equip = []
         item = []
 

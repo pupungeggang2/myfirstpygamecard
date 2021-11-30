@@ -17,10 +17,32 @@ def place_animation_handle():
         if var.Animation.place_box_tick > 2 * var.FPS and var.Animation.place_box_tick <= 3 * var.FPS:
             var.Animation.place_box_rect[1] -= 160 / var.FPS
 
-        if var.Animation.place_box_tick == 3 * var.FPS:
+        if var.Animation.place_box_tick >= 3 * var.FPS:
             var.Animation.place_box = False
             var.Animation.place_box_tick = 0
             var.Animation.place_box_rect = [40, -120, 240, 80]
+
+def screen_transition_to_battle_handle():
+    if var.Animation.scene_transition == True:
+        var.Animation.scene_transition_tick += 1
+        var.Animation.scene_transition_rect[1] += 1600 / 2 / var.FPS
+
+        if var.Animation.scene_transition_tick >= 2 * var.FPS:
+            var.Animation.scene_transition = False
+            var.Animation.scene_transition_tick = 0
+            var.Animation.scene_transition_rect = [0, -800, 1280, 800]
+            var.Input.mouse_enabled = True
+            var.Input.Keyboard.enabled = True
+
+def screen_transition_to_field_handle():
+    if var.Animation.scene_transition == True:
+        var.Animation.scene_transition_tick += 1
+        var.Animation.scene_transition_rect[1] += 1600 / 2 / var.FPS
+
+        if var.Animation.scene_transition_tick >= 2 * var.FPS:
+            var.Animation.scene_transition = False
+            var.Animation.scene_transition_tick = 0
+            var.Animation.scene_transition_rect = [0, -800, 1280, 800]
 
 def place_display():
     pygame.draw.rect(var.screen, design.Color.white, var.Animation.place_box_rect)
@@ -37,8 +59,12 @@ def enemy_display():
     for i in range(len(var.Field.enemy)):
         var.screen.blit(img.enemy['enemy'], [var.Field.enemy[i][0][0] - var.Camera.x, var.Field.enemy[i][0][1] - var.Camera.y])
 
+def scene_transtition_display():
+    pygame.draw.rect(var.screen, design.Color.black, var.Animation.scene_transition_rect)
+
 def draw_card(card, position):
     var.screen.blit(img.card['card_frame'], position)
+    var.screen.blit(img.card_image[card['ID']], [position[0] + UI.Card.image_position[0], position[1] + UI.Card.image_position[1]] , UI.Card.image)
 
     var.screen.blit(design.Font.card_energy.render(str(card['energy']), True, design.Color.black), [position[0] + UI.Card.energy_text[0], position[1] + UI.Card.energy_text[1]])
     var.screen.blit(design.Font.card_name.render(str(card['name']), True, design.Color.black), [position[0] + UI.Card.name_text[0], position[1] + UI.Card.name_text[1]])
@@ -89,6 +115,9 @@ def inventory_deck_display():
 def battle_start_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Battle.Start.rect)
     pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Start.rect, 2)
+    
+    for i in range(3):
+        draw_card(var.Player_Battle.deck[i], UI.Battle.Start.card[i][:2])
 
 def battle_field_display():
     for i in range(14):
