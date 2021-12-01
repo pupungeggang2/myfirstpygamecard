@@ -59,6 +59,8 @@ class Player_Info():
 class Player_Battle():
     energy = 0
     energy_max = 0
+    
+    hand_change = [False, False, False]
 
     hand = []
     deck = []

@@ -1,3 +1,5 @@
+from os import stat
+from posix import times_result
 import pygame
 import img
 
@@ -71,6 +73,10 @@ def draw_card(card, position):
     var.screen.blit(design.Font.card_description.render(str(card['description']), True, design.Color.black), [position[0] + UI.Card.description_text[0], position[1] + UI.Card.description_text[1]])
     var.screen.blit(design.Font.card_stat.render(str(card['stat'][0]) + '/' + str(card['stat'][1]), True, design.Color.black), [position[0] + UI.Card.stat_text[0], position[1] + UI.Card.stat_text[1]])
 
+def battle_unit_display(unit, position):
+    var.screen.blit(img.card_image[unit['ID']], position)
+    var.screen.blit(design.Font.card_stat.render(str(unit['stat'][0]) + '/' + str(unit['stat'][1]), True, design.Color.black), [position[0] + UI.Battle.Field.stat_text[0], position[1] + UI.Battle.Field.stat_text[1]])
+
 def inventory_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Field.Inventory.player_info)
     pygame.draw.rect(var.screen, design.Color.black, UI.Field.Inventory.player_info, 2)
@@ -119,9 +125,20 @@ def battle_start_display():
     for i in range(3):
         draw_card(var.Player_Battle.deck[i], UI.Battle.Start.card[i][:2])
 
+    for i in range(3):
+        if var.state == 'start':
+            if var.Player_Battle.hand_change[i] == True:
+                var.screen.blit(img.misc['return'], UI.Battle.Start.card[i][:2])
+
+    pygame.draw.rect(var.screen, design.Color.yellow, UI.Battle.Start.start_button)
+    pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Start.start_button, 2)
+
 def battle_field_display():
     for i in range(14):
         pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Field.cell_list[i], 2)
+
+        if var.Battle.field[i] != None:
+            battle_unit_display(var.Battle.field[i], UI.Battle.Field.cell_list[i])
 
 def battle_hand_display():
     pass

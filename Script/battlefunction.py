@@ -2,10 +2,22 @@ import random
 
 import var
 import carddata as cd
+import herodata as hd
 
 def battle_init():
-    var.Battle.field[0] = 0
-    var.Battle.field[7] = 0
+    var.Battle.field = [None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+    var.Battle.field[0] = {'ID' : 1000, 'name' : 'Hero', 'type' : 'hero', 'element' : 'normal', 'rarity' : 'basic', 'energy' : 0, 'stat' : [0, 20, 20], 'effect' : '', 'status' : ''}
+    tmp_ID = var.Enemy_Battle.ID
+    var.Battle.field[7] = {'ID' : var.Enemy_Battle.ID,
+                           'name' : hd.enemy_hero[tmp_ID]['name'],
+                           'type' : 'hero',
+                           'element' : hd.enemy_hero[tmp_ID]['element'],
+                           'rarity' : hd.enemy_hero[tmp_ID]['rarity'],
+                           'energy' : 0,
+                           'stat' : [0, hd.enemy_hero[tmp_ID]['life'], hd.enemy_hero[tmp_ID]['life']],
+                           'effect' : '',
+                           'status' : ''}
+    var.Player_Battle.hand_change = [False, False, False]
     battle_deck_generate()
     player_deck_shuffle()
 
@@ -40,3 +52,11 @@ def player_deck_shuffle():
     while len(tmp_deck) > 0:
         tmp_index = random.randint(0, len(tmp_deck) - 1)
         var.Player_Battle.deck.append(tmp_deck.pop(tmp_index))
+
+def start_hand_change():
+    if len(var.Player_Battle.deck) >= 6:
+        for i in range(3):
+            if var.Player_Battle.hand_change[i] == True:
+                tmp_card = var.Player_Battle.deck[i]
+                var.Player_Battle.deck[i] = var.Player_Battle.deck[i + 3]
+                var.Player_Battle.deck[i + 3] = tmp_card

@@ -49,6 +49,9 @@ def input_handle():
                     elif var.scene == 'field':
                         field.mouse_up_handle()
 
+                    elif var.scene == 'battle':
+                        battle.mouse_up_handle()
+
             if var.Input.Keyboard.enabled == True:
                 if event.type == pygame.KEYDOWN:
                     var.Input.Keyboard.key = event.key
