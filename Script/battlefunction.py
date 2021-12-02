@@ -101,3 +101,13 @@ def valid_point_generate(card):
         for i in range(7):
             if var.Battle.field[i] == None:
                 var.Player_Battle.valid_point.append(i)
+
+def card_play_validation_check(card):
+    if var.Player_Battle.energy < card['energy']:
+        return False
+
+def play_card(card, input):
+    pass
+
+def release_card():
+    pass
