@@ -69,6 +69,8 @@ class Player_Battle():
     hand_pop = -1
     selected_card = -1
 
+    valid_point = []
+
 class Enemy_Battle():
     ID = 0
     AI_type = 0

@@ -1,5 +1,3 @@
-from os import stat
-from posix import times_result
 import pygame
 import img
 
@@ -140,6 +138,10 @@ def battle_field_display():
 
         if var.Battle.field[i] != None:
             battle_unit_display(var.Battle.field[i], UI.Battle.Field.cell_list[i])
+
+    for i in range(len(var.Player_Battle.valid_point)):
+        pos = var.Player_Battle.valid_point[i]
+        var.screen.blit(img.misc['select_frame'], UI.Battle.Field.cell_list[pos])
 
 def battle_hand_display():
     for i in range(len(var.Player_Battle.hand)):

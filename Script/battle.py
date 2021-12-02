@@ -68,4 +68,5 @@ def mouse_up_handle():
         if var.battle_input == '':
             if var.Player_Battle.hand_pop != -1:
                 var.Player_Battle.selected_card = var.Player_Battle.hand_pop
+                bf.valid_point_generate(var.Player_Battle.hand[var.Player_Battle.selected_card])
                 var.battle_input = 'card_selected'

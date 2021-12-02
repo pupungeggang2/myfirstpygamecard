@@ -93,3 +93,11 @@ def draw_card_from_deck():
 
         if len(var.Player_Battle.hand) < 8:
             var.Player_Battle.hand.append(tmp_card)
+
+def valid_point_generate(card):
+    var.Player_Battle.valid_point = []
+
+    if card['play'] == ['u', 'pe', '']:
+        for i in range(7):
+            if var.Battle.field[i] == None:
+                var.Player_Battle.valid_point.append(i)
