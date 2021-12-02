@@ -75,6 +75,7 @@ def draw_card(card, position):
 
 def battle_unit_display(unit, position):
     var.screen.blit(img.card_image[unit['ID']], position)
+    pygame.draw.rect(var.screen, design.Color.yellow, [position[0] + UI.Battle.Field.stat_box[0], position[1] + UI.Battle.Field.stat_box[1], UI.Battle.Field.stat_box[2], UI.Battle.Field.stat_box[3]])
     var.screen.blit(design.Font.card_stat.render(str(unit['stat'][0]) + '/' + str(unit['stat'][1]), True, design.Color.black), [position[0] + UI.Battle.Field.stat_text[0], position[1] + UI.Battle.Field.stat_text[1]])
 
 def inventory_display():
@@ -141,4 +142,28 @@ def battle_field_display():
             battle_unit_display(var.Battle.field[i], UI.Battle.Field.cell_list[i])
 
 def battle_hand_display():
-    pass
+    for i in range(len(var.Player_Battle.hand)):
+        if i != var.Player_Battle.hand_pop:
+            draw_card(var.Player_Battle.hand[i], UI.Battle.player_hand[i])
+
+    if var.Player_Battle.hand_pop != -1:
+        draw_card(var.Player_Battle.hand[var.Player_Battle.hand_pop], UI.Battle.player_hand_pop[var.Player_Battle.hand_pop][:2])
+
+    if var.battle_input == 'card_selected':
+        var.screen.blit(img.misc['select_frame_card'], UI.Battle.player_hand_pop[var.Player_Battle.selected_card])
+
+def battle_card_back_display():
+    if len(var.Player_Battle.deck) > 0:
+        var.screen.blit(img.card_back['basic_1'], UI.Battle.player_card_back[0])
+
+    if len(var.Player_Battle.deck) > 3:
+        var.screen.blit(img.card_back['basic_1'], UI.Battle.player_card_back[1])
+
+    if len(var.Player_Battle.deck) > 6:
+        var.screen.blit(img.card_back['basic_1'], UI.Battle.player_card_back[2])
+
+    if len(var.Player_Battle.deck) > 9:
+        var.screen.blit(img.card_back['basic_1'], UI.Battle.player_card_back[3])
+
+    if len(var.Player_Battle.deck) > 12:
+        var.screen.blit(img.card_back['basic_1'], UI.Battle.player_card_back[4])

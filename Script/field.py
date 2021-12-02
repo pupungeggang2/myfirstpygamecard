@@ -144,4 +144,4 @@ def key_press_handle():
 
                 if ff.collision_check() == False:
                     var.Player_Field.moving = True
-                    var.Player_moved = 0
+                    var.Player_Field.moved = 0

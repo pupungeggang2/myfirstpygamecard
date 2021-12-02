@@ -41,3 +41,5 @@ def image_load():
     card_image[20001] = pygame.image.load('../Image/Card/Card20001.png')
     
     misc['return'] = pygame.image.load('../Image/Return.png')
+    misc['select_frame_card'] = pygame.image.load('../Image/SelectFrameCard.png')
+    misc['select_frame'] = pygame.image.load('../Image/SelectFrame.png')

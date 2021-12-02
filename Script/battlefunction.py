@@ -17,7 +17,12 @@ def battle_init():
                            'stat' : [0, hd.enemy_hero[tmp_ID]['life'], hd.enemy_hero[tmp_ID]['life']],
                            'effect' : '',
                            'status' : ''}
+
     var.Player_Battle.hand_change = [False, False, False]
+    var.Battle.turn_number = 0
+    var.Player_Battle.energy = 0
+    var.Player_Battle.energy_max = 0
+
     battle_deck_generate()
     player_deck_shuffle()
 
@@ -60,3 +65,31 @@ def start_hand_change():
                 tmp_card = var.Player_Battle.deck[i]
                 var.Player_Battle.deck[i] = var.Player_Battle.deck[i + 3]
                 var.Player_Battle.deck[i + 3] = tmp_card
+
+def start_of_battle():
+    var.Player_Battle.energy_max = 0 
+    var.Player_Battle.energy = var.Player_Battle.energy_max
+    
+    for i in range(3):
+        draw_card_from_deck()
+
+    turn_start()
+
+def turn_start():
+    var.state = 'your_turn'
+
+    var.Battle.turn_number += 1
+
+    if var.Player_Battle.energy_max < 8:
+        var.Player_Battle.energy_max += 1
+
+    var.Player_Battle.energy = var.Player_Battle.energy_max
+
+    draw_card_from_deck()
+
+def draw_card_from_deck():
+    if len(var.Player_Battle.deck) > 0:
+        tmp_card = var.Player_Battle.deck.pop(0)
+
+        if len(var.Player_Battle.hand) < 8:
+            var.Player_Battle.hand.append(tmp_card)

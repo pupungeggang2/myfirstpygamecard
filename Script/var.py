@@ -6,6 +6,7 @@ state = ''
 state_inventory = ''
 state_player = 'portrait'
 inventory_page = 0
+battle_input = ''
 
 class Animation():
     place_box = False
@@ -64,6 +65,9 @@ class Player_Battle():
 
     hand = []
     deck = []
+
+    hand_pop = -1
+    selected_card = -1
 
 class Enemy_Battle():
     ID = 0
