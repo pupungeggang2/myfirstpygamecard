@@ -106,8 +106,37 @@ def card_play_validation_check(card):
     if var.Player_Battle.energy < card['energy']:
         return False
 
-def play_card(card, input):
-    pass
+    if card['play'] == ['u', 'pe', '']:
+        for i in range(len(var.Player_Battle.valid_point)):
+            if var.Player_Battle.battle_input_1 == var.Player_Battle.valid_point[i]:
+                break
 
-def release_card():
-    pass
+            if i == len(var.Player_Battle.valid_point) - 1:
+                return False
+
+    return True
+
+def card_play(card, input):
+    var.Player_Battle.energy -= card['energy']
+
+    if card['play'] == ['u', 'pe', '']:
+        tmp_unit = {'ID' : card['ID'],
+                    'type' : card['type'],
+                    'name' : card['name'],
+                    'element' : card['element'],
+                    'rarity' : card['rarity'],
+                    'energy' : card['energy'],
+                    'stat' : [card['stat'][0], card['stat'][1], card['stat'][1]],
+                    'effect' : card['effect'],
+                    'attack' : 0}
+        summon_unit(tmp_unit, input)
+
+def card_release():
+    var.battle_input = ''
+    var.Player_Battle.selected_card = -1
+    var.Player_Battle.hand_pop = -1
+    var.Player_Battle.valid_point = []
+
+def summon_unit(unit, position):
+    if var.Battle.field[position] == None:
+        var.Battle.field[position] = unit

@@ -30,6 +30,9 @@ def display():
         df.battle_start_display()
 
     df.battle_hand_display()
+    df.energy_orb_display()
+
+    pygame.draw.rect(var.screen, design.Color.black, UI.Battle.cancel, 2)
 
     df.scene_transtition_display()
 
@@ -70,3 +73,17 @@ def mouse_up_handle():
                 var.Player_Battle.selected_card = var.Player_Battle.hand_pop
                 bf.valid_point_generate(var.Player_Battle.hand[var.Player_Battle.selected_card])
                 var.battle_input = 'card_selected'
+
+        elif var.battle_input == 'card_selected':
+            for i in range(14):
+                if iff.point_inside_rect(mouse[0], mouse[1], UI.Battle.Field.cell_list[i][0], UI.Battle.Field.cell_list[i][1], UI.Battle.Field.cell_list[i][2], UI.Battle.Field.cell_list[i][3]):
+                    var.Player_Battle.battle_input_1 = i
+
+                    if var.Player_Battle.hand[var.Player_Battle.selected_card]['play'] == ['u', 'pe', '']:
+                        valid = bf.card_play_validation_check(var.Player_Battle.hand[var.Player_Battle.selected_card])
+
+                        if valid == True:
+                            bf.card_play(var.Player_Battle.hand[var.Player_Battle.selected_card], var.Player_Battle.battle_input_1)
+                            var.Player_Battle.hand.pop(var.Player_Battle.selected_card)
+
+                        bf.card_release()

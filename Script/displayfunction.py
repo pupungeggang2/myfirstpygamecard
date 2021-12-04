@@ -169,3 +169,14 @@ def battle_card_back_display():
 
     if len(var.Player_Battle.deck) > 12:
         var.screen.blit(img.card_back['basic_1'], UI.Battle.player_card_back[4])
+
+def energy_orb_display():
+    for i in range(8):
+        if i < var.Player_Battle.energy:
+            var.screen.blit(img.energy['full'], UI.Battle.energy_orb[i])
+
+        elif i < var.Player_Battle.energy_max:
+            var.screen.blit(img.energy['empty'], UI.Battle.energy_orb[i])
+
+        else:
+            var.screen.blit(img.energy['void'], UI.Battle.energy_orb[i])

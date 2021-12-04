@@ -8,6 +8,7 @@ inventory_tab = {}
 card = {}
 card_back = {}
 card_image = {}
+energy = {}
 misc = {}
 
 def image_load():
@@ -39,6 +40,10 @@ def image_load():
     card_image[10003] = pygame.image.load('../Image/Card/Card10003.png')
     card_image[10004] = pygame.image.load('../Image/Card/Card10004.png')
     card_image[20001] = pygame.image.load('../Image/Card/Card20001.png')
+
+    energy['full'] = pygame.image.load('../Image/EnergyOrbFull.png')
+    energy['empty'] = pygame.image.load('../Image/EnergyOrbEmpty.png')
+    energy['void'] = pygame.image.load('../Image/EnergyOrbVoid.png')
     
     misc['return'] = pygame.image.load('../Image/Return.png')
     misc['select_frame_card'] = pygame.image.load('../Image/SelectFrameCard.png')

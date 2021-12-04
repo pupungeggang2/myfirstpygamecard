@@ -68,6 +68,8 @@ class Player_Battle():
 
     hand_pop = -1
     selected_card = -1
+    battle_input_1 = -1
+    battle_input_2 = -1
 
     valid_point = []
 
