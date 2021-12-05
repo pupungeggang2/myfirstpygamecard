@@ -15,6 +15,9 @@ class Animation():
     scene_transition = False
     scene_transition_tick = 0
     scene_transition_rect = [0, -800, 1280, 800]
+    scene_transition_field = False
+    scene_transition_field_tick = 0
+    scene_transition_field_rect = [0, -800, 1280, 800]
 
 class Input():
     mouse_enabled = True
@@ -34,6 +37,7 @@ class Field():
     wall = []
     interaction = []
     connection = []
+    enemy = []
 
 class Player_Field():
     position = [320, 400]
@@ -70,6 +74,8 @@ class Player_Battle():
     selected_card = -1
     battle_input_1 = -1
     battle_input_2 = -1
+    battle_input_field = -1
+    battle_input_enemy = -1
 
     valid_point = []
 

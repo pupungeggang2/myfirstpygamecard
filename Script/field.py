@@ -19,6 +19,9 @@ def manage():
     if var.Animation.scene_transition == True:
         df.screen_transition_to_battle_handle()
 
+    if var.Animation.scene_transition_field == True:
+        df.screen_transition_to_field_handle()
+
     display()
     key_press_handle()
     scene_change()
@@ -35,6 +38,7 @@ def display():
         df.inventory_display()
 
     df.scene_transtition_display()
+    df.scene_transtition_field_display()
 
     pygame.display.flip()
 
@@ -65,7 +69,7 @@ def scene_transition_to_battle():
     var.Input.Keyboard.enabled = False
 
 def scene_change():
-    if var.Animation.scene_transition == True and var.Animation.scene_transition_tick >= var.FPS:
+    if var.Animation.scene_transition == True and var.Animation.scene_transition_tick == var.FPS:
         start.start_battle()
 
 def camera_adjust_x():

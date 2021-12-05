@@ -9,6 +9,7 @@ card = {}
 card_back = {}
 card_image = {}
 energy = {}
+button = {}
 misc = {}
 
 def image_load():
@@ -44,7 +45,11 @@ def image_load():
     energy['full'] = pygame.image.load('../Image/EnergyOrbFull.png')
     energy['empty'] = pygame.image.load('../Image/EnergyOrbEmpty.png')
     energy['void'] = pygame.image.load('../Image/EnergyOrbVoid.png')
+
+    button['cancel'] = pygame.image.load('../Image/Button/Cancel.png')
+    button['turn_end'] = pygame.image.load('../Image/Button/TurnEnd.png')
     
     misc['return'] = pygame.image.load('../Image/Return.png')
     misc['select_frame_card'] = pygame.image.load('../Image/SelectFrameCard.png')
     misc['select_frame'] = pygame.image.load('../Image/SelectFrame.png')
+    misc['attack_frame'] = pygame.image.load('../Image/AttackFrame.png')

@@ -27,7 +27,6 @@ def field_load(place):
     for i in range(len(fd.enemy[place])):
         var.Field.enemy.append([[fd.enemy[place][i][0][0], fd.enemy[place][i][0][1]], fd.enemy[place][i][1]])
 
-
 def collision_check():
     player_row = var.Player_Field.position[1] // 80
     player_column = var.Player_Field.position[0] // 80

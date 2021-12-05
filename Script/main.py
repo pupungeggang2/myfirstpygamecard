@@ -76,6 +76,4 @@ try:
     main()
 
 except:
-    print(var.Player_Field.position)
-    print(var.Field.connection)
     traceback.print_exc()

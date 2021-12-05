@@ -3,10 +3,11 @@ import random
 import var
 import carddata as cd
 import herodata as hd
+import start
 
 def battle_init():
     var.Battle.field = [None, None, None, None, None, None, None, None, None, None, None, None, None, None]
-    var.Battle.field[0] = {'ID' : 1000, 'name' : 'Hero', 'type' : 'hero', 'element' : 'normal', 'rarity' : 'basic', 'energy' : 0, 'stat' : [0, 20, 20], 'effect' : '', 'status' : ''}
+    var.Battle.field[0] = {'ID' : 1000, 'name' : 'Hero', 'type' : 'hero', 'element' : 'normal', 'rarity' : 'basic', 'energy' : 0, 'stat' : [0, 20, 20], 'effect' : '', 'status' : '', 'attack' : 0}
     tmp_ID = var.Enemy_Battle.ID
     var.Battle.field[7] = {'ID' : var.Enemy_Battle.ID,
                            'name' : hd.enemy_hero[tmp_ID]['name'],
@@ -16,7 +17,8 @@ def battle_init():
                            'energy' : 0,
                            'stat' : [0, hd.enemy_hero[tmp_ID]['life'], hd.enemy_hero[tmp_ID]['life']],
                            'effect' : '',
-                           'status' : ''}
+                           'status' : '',
+                           'attack' : 0}
 
     var.Player_Battle.hand_change = [False, False, False]
     var.Battle.turn_number = 0
@@ -85,7 +87,14 @@ def turn_start():
 
     var.Player_Battle.energy = var.Player_Battle.energy_max
 
+    for i in range(14):
+        if var.Battle.field[i] != None:
+            var.Battle.field[i]['attack'] = 1
+
     draw_card_from_deck()
+
+def turn_end():
+    var.state = 'enemy_turn'
 
 def draw_card_from_deck():
     if len(var.Player_Battle.deck) > 0:
@@ -101,6 +110,13 @@ def valid_point_generate(card):
         for i in range(7):
             if var.Battle.field[i] == None:
                 var.Player_Battle.valid_point.append(i)
+
+def valid_point_generate_attack():
+    var.Player_Battle.valid_point = []
+
+    for i in range(7, 14):
+        if var.Battle.field[i] != None:
+            var.Player_Battle.valid_point.append(i)
 
 def card_play_validation_check(card):
     if var.Player_Battle.energy < card['energy']:
@@ -140,3 +156,56 @@ def card_release():
 def summon_unit(unit, position):
     if var.Battle.field[position] == None:
         var.Battle.field[position] = unit
+
+def summon_unit_auto(unit, side):
+    if side == 0:
+        for i in range(1, 7):
+            if var.Battle.field[i] == None:
+                var.Battle.field[i] = unit
+                break
+
+    elif side == 1:
+        for i in range(8, 14):
+            if var.Battle.field[i] == None:
+                var.Battle.field[i] = unit
+                break
+
+def attack_validation_check(position1, position2):
+    for i in range(len(var.Player_Battle.valid_point)):
+        if position2 == var.Player_Battle.valid_point[i]:
+            break
+
+        if i == len(var.Player_Battle.valid_point) - 1:
+            return False
+
+    if var.Battle.field[position1] != None and var.Battle.field[position2] != None:
+        if var.Battle.field[position1]['attack'] > 0:
+            return True
+
+    return False
+
+def attack(position1, position2):
+    if var.Battle.field[position1] != None and var.Battle.field[position2] != None:
+        var.Battle.field[position2]['stat'][1] -= var.Battle.field[position1]['stat'][0]
+        var.Battle.field[position1]['stat'][1] -= var.Battle.field[position2]['stat'][0]
+
+    var.Battle.field[position1]['attack'] -= 1
+
+    death_check()
+
+def death_check():
+    for i in range(14):
+        if var.Battle.field[i] != None:
+            if var.Battle.field[i]['stat'][1] <= 0:
+                var.Battle.field[i] = None
+
+                if i == 7:
+                    var.Animation.scene_transition_field = True
+                    var.Input.mouse_enabled = False
+                    var.Input.Keyboard.enabled = False
+
+def field_release():
+    var.battle_input = ''
+    var.Player_Battle.battle_input_field = -1
+    var.Player_Battle.battle_input_enemy = -1
+    var.Player_Battle.valid_point = []

@@ -6,6 +6,7 @@ def start_title():
 
 def start_field():
     var.scene = 'field'
+    var.state = ''
 
 def start_battle():
     var.scene = 'battle'

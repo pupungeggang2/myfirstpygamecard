@@ -35,14 +35,17 @@ def screen_transition_to_battle_handle():
             var.Input.Keyboard.enabled = True
 
 def screen_transition_to_field_handle():
-    if var.Animation.scene_transition == True:
-        var.Animation.scene_transition_tick += 1
-        var.Animation.scene_transition_rect[1] += 1600 / 2 / var.FPS
+    if var.Animation.scene_transition_field == True:
+        var.Animation.scene_transition_field_tick += 1
+        var.Animation.scene_transition_field_rect[1] += 1600 / 2 / var.FPS
 
-        if var.Animation.scene_transition_tick >= 2 * var.FPS:
-            var.Animation.scene_transition = False
-            var.Animation.scene_transition_tick = 0
-            var.Animation.scene_transition_rect = [0, -800, 1280, 800]
+        if var.Animation.scene_transition_field_tick >= 2 * var.FPS:
+            var.Animation.scene_transition_field = False
+            var.Animation.scene_transition_field_tick = 0
+            var.Animation.scene_transition_field_rect = [0, -800, 1280, 800]
+            print(123)
+            var.Input.mouse_enabled = True
+            var.Input.Keyboard.enabled = True
 
 def place_display():
     pygame.draw.rect(var.screen, design.Color.white, var.Animation.place_box_rect)
@@ -62,6 +65,9 @@ def enemy_display():
 def scene_transtition_display():
     pygame.draw.rect(var.screen, design.Color.black, var.Animation.scene_transition_rect)
 
+def scene_transtition_field_display():
+    pygame.draw.rect(var.screen, design.Color.black, var.Animation.scene_transition_field_rect)
+
 def draw_card(card, position):
     var.screen.blit(img.card['card_frame'], position)
     var.screen.blit(img.card_image[card['ID']], [position[0] + UI.Card.image_position[0], position[1] + UI.Card.image_position[1]] , UI.Card.image)
@@ -70,6 +76,13 @@ def draw_card(card, position):
     var.screen.blit(design.Font.card_name.render(str(card['name']), True, design.Color.black), [position[0] + UI.Card.name_text[0], position[1] + UI.Card.name_text[1]])
     var.screen.blit(design.Font.card_description.render(str(card['description']), True, design.Color.black), [position[0] + UI.Card.description_text[0], position[1] + UI.Card.description_text[1]])
     var.screen.blit(design.Font.card_stat.render(str(card['stat'][0]) + '/' + str(card['stat'][1]), True, design.Color.black), [position[0] + UI.Card.stat_text[0], position[1] + UI.Card.stat_text[1]])
+
+def battle_title_display():
+    if var.state == 'your_turn':
+        var.screen.blit(design.Font.title.render('Your Turn', True, design.Color.black), UI.Battle.title_text)
+
+    elif var.state == 'enemy_turn':
+        var.screen.blit(design.Font.title.render('Enemy Turn', True, design.Color.black), UI.Battle.title_text)
 
 def battle_unit_display(unit, position):
     var.screen.blit(img.card_image[unit['ID']], position)
@@ -139,6 +152,9 @@ def battle_field_display():
         if var.Battle.field[i] != None:
             battle_unit_display(var.Battle.field[i], UI.Battle.Field.cell_list[i])
 
+            if var.Battle.field[i]['attack'] > 0:
+                var.screen.blit(img.misc['attack_frame'], UI.Battle.Field.cell_list[i][:2])
+
     for i in range(len(var.Player_Battle.valid_point)):
         pos = var.Player_Battle.valid_point[i]
         var.screen.blit(img.misc['select_frame'], UI.Battle.Field.cell_list[pos])
@@ -180,3 +196,7 @@ def energy_orb_display():
 
         else:
             var.screen.blit(img.energy['void'], UI.Battle.energy_orb[i])
+
+def button_display():
+    var.screen.blit(img.button['cancel'], UI.Battle.cancel)
+    var.screen.blit(img.button['turn_end'], UI.Battle.turn_end)
