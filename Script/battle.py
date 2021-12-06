@@ -20,6 +20,9 @@ def manage():
 
     if var.Animation.scene_transition == True:
         df.screen_transition_to_battle_handle()
+
+    if var.Animation.attack == True:
+        df.attack_animation_handle()
         
     scene_change_field()
     display()
@@ -127,4 +130,7 @@ def mouse_up_handle():
     elif var.state == 'enemy_turn':
         bf.turn_start()
 
-    
+    elif var.state == 'result':
+        var.Animation.scene_transition_field = True
+        var.Input.mouse_enabled = False
+        var.Input.Keyboard.enabled = False

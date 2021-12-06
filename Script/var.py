@@ -18,6 +18,11 @@ class Animation():
     scene_transition_field = False
     scene_transition_field_tick = 0
     scene_transition_field_rect = [0, -800, 1280, 800]
+    attack = False
+    attack_tick = 0
+    attack_frame = 0
+    attack_position_1 = -1
+    attack_position_2 = -1
 
 class Input():
     mouse_enabled = True

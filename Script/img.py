@@ -10,12 +10,15 @@ card_back = {}
 card_image = {}
 energy = {}
 button = {}
+animation = {}
 misc = {}
 
 def image_load():
     place['home_town'] = pygame.image.load('../Image/Place/HomeTown.png')
     place['field_1'] = pygame.image.load('../Image/Place/Field01.png')
     place['field_village'] = pygame.image.load('../Image/Place/FieldVillage.png')
+    place['field_2'] = pygame.image.load('../Image/Place/Field02.png')
+    place['field_final'] = pygame.image.load('../Image/Place/FieldFinal.png')
 
     hero['left'] = pygame.image.load('../Image/Character/HeroLeft.png')
     hero['right'] = pygame.image.load('../Image/Character/HeroRight.png')
@@ -36,6 +39,7 @@ def image_load():
 
     card_image[1000] = pygame.image.load('../Image/Card/HeroImage.png')
     card_image[1001] = pygame.image.load('../Image/Card/EnemyHero1001.png')
+    card_image[1002] = pygame.image.load('../Image/Card/EnemyHero1002.png')
     card_image[10001] = pygame.image.load('../Image/Card/Card10001.png')
     card_image[10002] = pygame.image.load('../Image/Card/Card10002.png')
     card_image[10003] = pygame.image.load('../Image/Card/Card10003.png')
@@ -48,6 +52,16 @@ def image_load():
 
     button['cancel'] = pygame.image.load('../Image/Button/Cancel.png')
     button['turn_end'] = pygame.image.load('../Image/Button/TurnEnd.png')
+
+    animation['attack'] = {}
+    animation['attack'][0] = pygame.image.load('../Image/Animation/Attack00.png')
+    animation['attack'][1] = pygame.image.load('../Image/Animation/Attack01.png')
+    animation['attack'][2] = pygame.image.load('../Image/Animation/Attack02.png')
+    animation['attack'][3] = pygame.image.load('../Image/Animation/Attack03.png')
+    animation['attack'][4] = pygame.image.load('../Image/Animation/Attack04.png')
+    animation['attack'][5] = pygame.image.load('../Image/Animation/Attack05.png')
+    animation['attack'][6] = pygame.image.load('../Image/Animation/Attack06.png')
+    animation['attack'][7] = pygame.image.load('../Image/Animation/Attack07.png')
     
     misc['return'] = pygame.image.load('../Image/Return.png')
     misc['select_frame_card'] = pygame.image.load('../Image/SelectFrameCard.png')

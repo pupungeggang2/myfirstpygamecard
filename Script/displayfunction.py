@@ -14,10 +14,10 @@ def place_animation_handle():
         if var.Animation.place_box_tick > 0 and var.Animation.place_box_tick <= 1 * var.FPS :
             var.Animation.place_box_rect[1] += 160 / var.FPS
 
-        if var.Animation.place_box_tick > 2 * var.FPS and var.Animation.place_box_tick <= 3 * var.FPS:
+        elif var.Animation.place_box_tick > 2 * var.FPS and var.Animation.place_box_tick <= 3 * var.FPS:
             var.Animation.place_box_rect[1] -= 160 / var.FPS
 
-        if var.Animation.place_box_tick >= 3 * var.FPS:
+        elif var.Animation.place_box_tick >= 3 * var.FPS:
             var.Animation.place_box = False
             var.Animation.place_box_tick = 0
             var.Animation.place_box_rect = [40, -120, 240, 80]
@@ -43,9 +43,25 @@ def screen_transition_to_field_handle():
             var.Animation.scene_transition_field = False
             var.Animation.scene_transition_field_tick = 0
             var.Animation.scene_transition_field_rect = [0, -800, 1280, 800]
-            print(123)
             var.Input.mouse_enabled = True
             var.Input.Keyboard.enabled = True
+
+def attack_animation_handle():
+    if var.Animation.attack == True:
+        var.Animation.attack_tick += 1
+    
+        if var.Animation.attack_tick >= 0 and var.Animation.attack_tick < 0.5 * var.FPS:
+            full_tick = 0.5 * var.FPS
+            var.Animation.attack_frame = int(var.Animation.attack_tick / full_tick * 8)
+
+        elif var.Animation.attack_tick >= 0.5 * var.FPS and var.Animation.attack_tick < 1 * var.FPS:
+            full_tick = 0.5 * var.FPS
+            tick_shift = 0.5  * var.FPS
+            var.Animation.attack_frame = int((var.Animation.attack_tick - tick_shift) / full_tick * 8)
+
+        elif var.Animation.attack_tick >= 1 * var.FPS:
+            var.Animation.attack_tick = 0
+            var.Animation.attack = False
 
 def place_display():
     pygame.draw.rect(var.screen, design.Color.white, var.Animation.place_box_rect)
@@ -158,6 +174,13 @@ def battle_field_display():
     for i in range(len(var.Player_Battle.valid_point)):
         pos = var.Player_Battle.valid_point[i]
         var.screen.blit(img.misc['select_frame'], UI.Battle.Field.cell_list[pos])
+
+    if var.Animation.attack == True:
+        if var.Animation.attack_tick >= 0 and var.Animation.attack_tick < 0.5 * var.FPS:
+            var.screen.blit(img.animation['attack'][var.Animation.attack_frame], UI.Battle.Field.cell_list[var.Animation.attack_position_2])
+
+        elif var.Animation.attack_tick >= 0.5 * var.FPS and var.Animation.attack_tick < 1 * var.FPS:
+            var.screen.blit(img.animation['attack'][var.Animation.attack_frame], UI.Battle.Field.cell_list[var.Animation.attack_position_1])
 
 def battle_hand_display():
     for i in range(len(var.Player_Battle.hand)):

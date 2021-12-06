@@ -25,6 +25,7 @@ def battle_init():
     var.Player_Battle.energy = 0
     var.Player_Battle.energy_max = 0
 
+    var.Player_Battle.hand = []
     battle_deck_generate()
     player_deck_shuffle()
 
@@ -189,6 +190,12 @@ def attack(position1, position2):
         var.Battle.field[position2]['stat'][1] -= var.Battle.field[position1]['stat'][0]
         var.Battle.field[position1]['stat'][1] -= var.Battle.field[position2]['stat'][0]
 
+        var.Animation.attack = True
+        var.Animation.attack_tick = 0
+        var.Animation.attack_frame = 0
+        var.Animation.attack_position_1 = position1
+        var.Animation.attack_position_2 = position2
+
     var.Battle.field[position1]['attack'] -= 1
 
     death_check()
@@ -200,9 +207,7 @@ def death_check():
                 var.Battle.field[i] = None
 
                 if i == 7:
-                    var.Animation.scene_transition_field = True
-                    var.Input.mouse_enabled = False
-                    var.Input.Keyboard.enabled = False
+                    var.state = 'result'
 
 def field_release():
     var.battle_input = ''

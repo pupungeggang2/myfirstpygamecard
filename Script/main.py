@@ -76,4 +76,5 @@ try:
     main()
 
 except:
+    print(var.state)
     traceback.print_exc()
