@@ -128,6 +128,9 @@ def mouse_up_handle():
     elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.item_tab[0], UI.Field.Inventory.item_tab[1], UI.Field.Inventory.item_tab[2], UI.Field.Inventory.item_tab[3]):
         var.state_inventory = 'item'
 
+    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.map_tab[0], UI.Field.Inventory.map_tab[1], UI.Field.Inventory.map_tab[2], UI.Field.Inventory.map_tab[3]):
+        var.state_inventory = 'map'
+
 def key_down_handle():
     if var.Input.Keyboard.key == 105:
         if var.state == 'inventory':

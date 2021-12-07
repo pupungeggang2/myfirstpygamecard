@@ -41,6 +41,9 @@ def display():
     if var.state == 'start' or var.state == 'start_confirm':
         df.battle_start_display()
 
+    if var.state == 'result':
+        df.battle_result_display()
+
     df.scene_transtition_display()
     df.scene_transtition_field_display()
 
@@ -131,6 +134,7 @@ def mouse_up_handle():
         bf.turn_start()
 
     elif var.state == 'result':
-        var.Animation.scene_transition_field = True
-        var.Input.mouse_enabled = False
-        var.Input.Keyboard.enabled = False
+        if iff.point_inside_rect(mouse[0], mouse[1], UI.Battle.Result.button[0], UI.Battle.Result.button[1], UI.Battle.Result.button[2], UI.Battle.Result.button[3]):
+            var.Animation.scene_transition_field = True
+            var.Input.mouse_enabled = False
+            var.Input.Keyboard.enabled = False

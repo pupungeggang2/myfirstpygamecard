@@ -11,7 +11,7 @@ import title
 import field
 import battle
 
-clock = pygame.time.Clock()
+var.clock = pygame.time.Clock()
 
 def init():
     var.screen = pygame.display.set_mode((1280, 800))
@@ -21,7 +21,7 @@ def init():
 
 def main():
     while True:
-        clock.tick(var.FPS)
+        var.clock.tick(var.FPS)
         manage()
         input_handle()
 

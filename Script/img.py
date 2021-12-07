@@ -10,6 +10,7 @@ card_back = {}
 card_image = {}
 energy = {}
 button = {}
+bar = {}
 animation = {}
 misc = {}
 
@@ -19,6 +20,7 @@ def image_load():
     place['field_village'] = pygame.image.load('../Image/Place/FieldVillage.png')
     place['field_2'] = pygame.image.load('../Image/Place/Field02.png')
     place['field_final'] = pygame.image.load('../Image/Place/FieldFinal.png')
+    place['map'] = pygame.image.load('../Image/Place/Map.png')
 
     hero['left'] = pygame.image.load('../Image/Character/HeroLeft.png')
     hero['right'] = pygame.image.load('../Image/Character/HeroRight.png')
@@ -32,6 +34,7 @@ def image_load():
     inventory_tab['deck'] = pygame.image.load('../Image/DeckTab.png')
     inventory_tab['equip'] = pygame.image.load('../Image/EquipTab.png')
     inventory_tab['item'] = pygame.image.load('../Image/ItemTab.png')
+    inventory_tab['map'] = pygame.image.load('../Image/MapTab.png')
 
     card['card_frame'] = pygame.image.load('../Image/Card/CardFrame.png')
 
@@ -53,6 +56,9 @@ def image_load():
     button['cancel'] = pygame.image.load('../Image/Button/Cancel.png')
     button['turn_end'] = pygame.image.load('../Image/Button/TurnEnd.png')
 
+    bar['exp_full'] = pygame.image.load('../Image/ExpBarFull.png')
+    bar['exp_empty'] = pygame.image.load('../Image/ExpBarEmpty.png')
+
     animation['attack'] = {}
     animation['attack'][0] = pygame.image.load('../Image/Animation/Attack00.png')
     animation['attack'][1] = pygame.image.load('../Image/Animation/Attack01.png')
@@ -67,3 +73,4 @@ def image_load():
     misc['select_frame_card'] = pygame.image.load('../Image/SelectFrameCard.png')
     misc['select_frame'] = pygame.image.load('../Image/SelectFrame.png')
     misc['attack_frame'] = pygame.image.load('../Image/AttackFrame.png')
+    misc['gold'] = pygame.image.load('../Image/Gold.png')

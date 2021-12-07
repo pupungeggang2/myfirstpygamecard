@@ -1,5 +1,6 @@
 screen = None
 FPS = 40
+map_surface = None
 
 scene = 'title'
 state = ''
@@ -7,6 +8,7 @@ state_inventory = ''
 state_player = 'portrait'
 inventory_page = 0
 battle_input = ''
+clock = None
 
 class Animation():
     place_box = False
@@ -55,6 +57,7 @@ class Player_Info():
     level = 1
     exp = 0
     exp_max = 20
+    gold = 0
 
     skill_tree = []
 
@@ -91,3 +94,5 @@ class Enemy_Battle():
 class Battle():
     turn_number = 0
     field = [None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+    exp_gain = 0
+    gold_gain = 0

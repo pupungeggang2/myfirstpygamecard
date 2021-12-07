@@ -114,15 +114,33 @@ def inventory_display():
     var.screen.blit(img.inventory_tab['deck'], UI.Field.Inventory.deck_tab)
     var.screen.blit(img.inventory_tab['equip'], UI.Field.Inventory.equip_tab)
     var.screen.blit(img.inventory_tab['item'], UI.Field.Inventory.item_tab)
+    var.screen.blit(img.inventory_tab['map'], UI.Field.Inventory.map_tab)
 
     pygame.draw.rect(var.screen, design.Color.white, UI.Field.Inventory.content)
     pygame.draw.rect(var.screen, design.Color.black, UI.Field.Inventory.content, 2)
+
+    if var.state_inventory != 'deck':
+        player_profile_display()
 
     if var.state_inventory == 'card':
         inventory_card_display()
 
     elif var.state_inventory == 'deck':
         inventory_deck_display()
+
+    elif var.state_inventory == 'map':
+        inventory_map_display()
+
+def player_profile_display():
+    var.screen.blit(img.card_image[1000], UI.Field.Inventory.player_profile_image)
+    var.screen.blit(design.Font.normal_text_large.render('Lv.' + str(var.Player_Info.level), True, design.Color.black), UI.Field.Inventory.player_level_text)
+    exp_percentage = int(var.Player_Info.exp / var.Player_Info.exp_max * 100)
+    var.screen.blit(design.Font.normal_text_large.render('Exp : ' + str(var.Player_Info.exp) + 
+    '/' + str(var.Player_Info.exp_max) + ' ' + str(exp_percentage) + '%', True, design.Color.black), UI.Field.Inventory.player_exp_text)
+    var.screen.blit(img.bar['exp_empty'], UI.Field.Inventory.player_exp_bar)
+    var.screen.blit(img.bar['exp_full'], UI.Field.Inventory.player_exp_bar, [0, 0, int(320 * exp_percentage / 100), 80])
+    var.screen.blit(img.misc['gold'], UI.Field.Inventory.gold_image)
+    var.screen.blit(design.Font.normal_text_large.render(str(var.Player_Info.gold), True, design.Color.black), UI.Field.Inventory.player_gold_text)
 
 def inventory_card_display():
     for i in range(8):
@@ -146,6 +164,14 @@ def inventory_deck_display():
             var.screen.blit(img.card_back[var.Player_Info.deck[i]['back']], UI.Field.Inventory.card_list[i][:2])
             var.screen.blit(design.Font.card_name.render(var.Player_Info.deck[i]['name'], True, design.Color.black), UI.Field.Inventory.deck_text[i])
 
+def inventory_map_display():
+    var.screen.blit(img.place['map'], UI.Field.Inventory.map)
+
+    var.map_surface = pygame.Surface(UI.map_places[var.Field.place][2:])
+    var.map_surface.set_alpha(128)
+    var.map_surface.fill(design.Color.green)
+    var.screen.blit(var.map_surface, UI.map_places[var.Field.place][:2])
+
 def battle_start_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Battle.Start.rect)
     pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Start.rect, 2)
@@ -160,6 +186,16 @@ def battle_start_display():
 
     pygame.draw.rect(var.screen, design.Color.yellow, UI.Battle.Start.start_button)
     pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Start.start_button, 2)
+
+def battle_result_display():
+    pygame.draw.rect(var.screen, design.Color.white, UI.Battle.Result.rect)
+    pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Result.rect, 2)
+
+    var.screen.blit(design.Font.normal_text_large.render('You gained ' + str(var.Battle.exp_gain) + 'EXP!', True, design.Color.black), UI.Battle.Result.exp_text)
+    var.screen.blit(design.Font.normal_text_large.render('You gained ' + str(var.Battle.gold_gain) + 'gold!', True, design.Color.black), UI.Battle.Result.gold_text)
+
+    pygame.draw.rect(var.screen, design.Color.yellow, UI.Battle.Result.button)
+    pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Result.button, 2)
 
 def battle_field_display():
     for i in range(14):

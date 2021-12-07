@@ -207,6 +207,7 @@ def death_check():
                 var.Battle.field[i] = None
 
                 if i == 7:
+                    battle_end()
                     var.state = 'result'
 
 def field_release():
@@ -214,3 +215,15 @@ def field_release():
     var.Player_Battle.battle_input_field = -1
     var.Player_Battle.battle_input_enemy = -1
     var.Player_Battle.valid_point = []
+
+def battle_end():
+    var.Battle.exp_gain = hd.enemy_hero[var.Enemy_Battle.ID]['exp']
+    var.Battle.gold_gain = hd.enemy_hero[var.Enemy_Battle.ID]['gold']
+    var.Player_Info.exp += var.Battle.exp_gain
+    var.Player_Info.gold += var.Battle.gold_gain
+    level_up_handle()
+
+def level_up_handle():
+    if var.Player_Info.exp >= var.Player_Info.exp_max:
+        var.Player_Info.exp -= var.Player_Info.exp_max
+        var.Player_Info.level += 1
