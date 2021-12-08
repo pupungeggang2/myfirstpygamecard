@@ -5,6 +5,7 @@ import UI
 import design
 
 import var
+import shop
 import carddata as cd
 
 def place_animation_handle():
@@ -71,6 +72,10 @@ def place_display():
 def terrain_display():
     var.screen.blit(img.place[var.Field.place], [0 - var.Camera.x, 0 - var.Camera.y])
 
+def interaction_display():
+    for i in range(len(var.Field.interaction)):
+        var.screen.blit(img.misc['interaction'], [var.Field.interaction[i][0][0] - var.Camera.x, var.Field.interaction[i][0][1] - var.Camera.y])
+
 def player_display():
     var.screen.blit(img.hero[var.Player_Field.face], [var.Player_Field.position[0] - var.Camera.x, var.Player_Field.position[1] - var.Camera.y])
 
@@ -119,7 +124,7 @@ def inventory_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Field.Inventory.content)
     pygame.draw.rect(var.screen, design.Color.black, UI.Field.Inventory.content, 2)
 
-    if var.state_inventory != 'deck':
+    if var.state_inventory != 'deck' and var.state_inventory != 'deck_edit' and var.state_inventory != 'deck_create':
         player_profile_display()
 
     if var.state_inventory == 'card':
@@ -130,6 +135,9 @@ def inventory_display():
 
     elif var.state_inventory == 'map':
         inventory_map_display()
+
+    elif var.state_inventory == 'deck_edit' or var.state_inventory == 'deck_create':
+        deck_edit_display(var.Player_Info.deck_tmp)
 
 def player_profile_display():
     var.screen.blit(img.card_image[1000], UI.Field.Inventory.player_profile_image)
@@ -164,6 +172,16 @@ def inventory_deck_display():
             var.screen.blit(img.card_back[var.Player_Info.deck[i]['back']], UI.Field.Inventory.card_list[i][:2])
             var.screen.blit(design.Font.card_name.render(var.Player_Info.deck[i]['name'], True, design.Color.black), UI.Field.Inventory.deck_text[i])
 
+    var.screen.blit(img.misc['add'], UI.Field.Inventory.add_tab)
+    var.screen.blit(img.misc['remove'], UI.Field.Inventory.remove_tab)
+    var.screen.blit(img.misc['ok_small'], UI.Field.Inventory.ok_tab)
+
+    if var.Player_Info.selected_deck != -1 and var.Player_Info.selected_deck < len(var.Player_Info.deck):
+        deck_display(var.Player_Info.deck[var.Player_Info.selected_deck])
+
+    if var.Player_Info.selected_deck != -1:
+        var.screen.blit(img.misc['select_frame_card'], UI.Field.Inventory.card_list[var.Player_Info.selected_deck])
+
 def inventory_map_display():
     var.screen.blit(img.place['map'], UI.Field.Inventory.map)
 
@@ -171,6 +189,49 @@ def inventory_map_display():
     var.map_surface.set_alpha(128)
     var.map_surface.fill(design.Color.green)
     var.screen.blit(var.map_surface, UI.map_places[var.Field.place][:2])
+
+def deck_edit_display(deck):
+    inventory_card_display()
+    deck_display(deck)
+
+    pygame.draw.rect(var.screen, design.Color.white, UI.Field.Inventory.deck_temp_name_rect)
+    pygame.draw.rect(var.screen, design.Color.black, UI.Field.Inventory.deck_temp_name_rect, 2)
+    var.screen.blit(design.Font.normal_text_large.render(var.Player_Info.deck_tmp['name'], True, design.Color.black), UI.Field.Inventory.deck_temp_name_text)
+
+    var.screen.blit(img.misc['ok_small'], UI.Field.Inventory.add_tab)
+    var.screen.blit(img.misc['cancel_small'], UI.Field.Inventory.remove_tab)
+
+def deck_display(deck):
+    for i in range(8):
+        if i < len(deck['card']):
+            pygame.draw.rect(var.screen, design.Color.black, UI.Field.Inventory.deck_card_list[i], 2)
+            tmp_txt = str(cd.card[deck['card'][i][0]]['energy']) + '. ' + cd.card[deck['card'][i][0]]['name']
+            var.screen.blit(design.Font.card_name.render(tmp_txt, True, design.Color.black), UI.Field.Inventory.deck_card_name_text[i])
+            var.screen.blit(design.Font.card_name.render('x' + str(deck['card'][i][1]), True, design.Color.black), UI.Field.Inventory.deck_card_amount_text[i])
+
+def shop_display():
+    pygame.draw.rect(var.screen, design.Color.white, UI.Field.Shop.rect)
+    pygame.draw.rect(var.screen, design.Color.black, UI.Field.Shop.rect, 2)
+
+    for i in range(5):
+        pygame.draw.rect(var.screen, design.Color.black, UI.Field.Shop.item_list[i], 2)
+        pygame.draw.rect(var.screen, design.Color.black, UI.Field.Shop.buy_button[i], 2)
+
+        if i < len(shop.shop[var.Field.shop_ID]['item_list']):
+            tmp_ID = shop.shop[var.Field.shop_ID]['item_list'][i]['ID']
+            
+            if shop.shop[var.Field.shop_ID]['item_list'][i]['sold'] == False:
+                pygame.draw.rect(var.screen, design.Color.green, UI.Field.Shop.buy_button[i])
+
+            else:
+                pygame.draw.rect(var.screen, design.Color.red, UI.Field.Shop.buy_button[i])
+
+            var.screen.blit(img.misc['gold'], UI.Field.Shop.item_gold_image[i])
+            var.screen.blit(design.Font.normal_text_large.render(shop.item[tmp_ID]['name'], True, design.Color.black), UI.Field.Shop.item_name_text[i])
+            var.screen.blit(design.Font.normal_text_large.render(str(shop.item[tmp_ID]['gold']), True, design.Color.black), UI.Field.Shop.item_gold_text[i])
+
+        var.screen.blit(img.misc['gold'], UI.Field.Shop.gold_image)
+        var.screen.blit(design.Font.normal_text_large.render(str(var.Player_Info.gold), True, design.Color.black), UI.Field.Shop.player_gold_text)
 
 def battle_start_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Battle.Start.rect)

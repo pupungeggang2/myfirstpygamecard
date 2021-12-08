@@ -32,10 +32,10 @@ def battle_init():
 def battle_deck_generate():
     var.Player_Battle.deck = []
 
-    for i in range(len(var.Player_Info.deck[var.Player_Info.selected_deck]['card'])):
-        for j in range(var.Player_Info.deck[var.Player_Info.selected_deck]['card'][i][1]):
-            tmp_ID = var.Player_Info.deck[var.Player_Info.selected_deck]['card'][i][0]
-            tmp_card = {'ID' : var.Player_Info.deck[var.Player_Info.selected_deck]['card'][i][0],
+    for i in range(len(var.Player_Info.deck[var.Player_Info.battle_deck]['card'])):
+        for j in range(var.Player_Info.deck[var.Player_Info.battle_deck]['card'][i][1]):
+            tmp_ID = var.Player_Info.deck[var.Player_Info.battle_deck]['card'][i][0]
+            tmp_card = {'ID' : var.Player_Info.deck[var.Player_Info.battle_deck]['card'][i][0],
                         'name' : cd.card[tmp_ID]['name'],
                         'type' : cd.card[tmp_ID]['type'],
                         'element' : cd.card[tmp_ID]['element'],
@@ -147,6 +147,16 @@ def card_play(card, input):
                     'effect' : card['effect'],
                     'attack' : 0}
         summon_unit(tmp_unit, input)
+
+        effect = card['effect'].split(',')
+
+        for i in range(len(effect)):
+            tmp_effect = effect[i].split(':')
+
+            if len(tmp_effect) == 2:
+                if tmp_effect[0] == 'play':
+                    if tmp_effect[1] == 'draw1':
+                        draw_card_from_deck()
 
 def card_release():
     var.battle_input = ''

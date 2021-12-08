@@ -22,20 +22,24 @@ def manage():
     if var.Animation.scene_transition_field == True:
         df.screen_transition_to_field_handle()
 
-    display()
     key_press_handle()
+    display()
     scene_change()
     player_move()
 
 def display():
     var.screen.fill(design.Color.white)
     df.terrain_display()
+    df.interaction_display()
     df.player_display()
     df.enemy_display()
     df.place_display()
 
     if var.state == 'inventory':
         df.inventory_display()
+
+    if var.state == 'shop':
+        df.shop_display()
 
     df.scene_transtition_display()
     df.scene_transtition_field_display()
@@ -112,32 +116,88 @@ def camera_adjust_y():
 def mouse_up_handle():
     mouse = pygame.mouse.get_pos()
 
-    if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.skill_tab[0], UI.Field.Inventory.skill_tab[1], UI.Field.Inventory.skill_tab[2], UI.Field.Inventory.skill_tab[3]):
-        var.state_inventory = 'skill_tree'
+    if var.state == 'inventory':
+        if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.skill_tab[0], UI.Field.Inventory.skill_tab[1], UI.Field.Inventory.skill_tab[2], UI.Field.Inventory.skill_tab[3]):
+            var.state_inventory = 'skill_tree'
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.card_tab[0], UI.Field.Inventory.card_tab[1], UI.Field.Inventory.card_tab[2], UI.Field.Inventory.card_tab[3]):
-        var.state_inventory = 'card'
-        var.inventory_page = 0
+        elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.card_tab[0], UI.Field.Inventory.card_tab[1], UI.Field.Inventory.card_tab[2], UI.Field.Inventory.card_tab[3]):
+            var.state_inventory = 'card'
+            var.inventory_page = 0
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.deck_tab[0], UI.Field.Inventory.deck_tab[1], UI.Field.Inventory.deck_tab[2], UI.Field.Inventory.deck_tab[3]):
-        var.state_inventory = 'deck'
+        elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.deck_tab[0], UI.Field.Inventory.deck_tab[1], UI.Field.Inventory.deck_tab[2], UI.Field.Inventory.deck_tab[3]):
+            var.state_inventory = 'deck'
+            var.Player_Info.selected_deck = -1
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.equip_tab[0], UI.Field.Inventory.equip_tab[1], UI.Field.Inventory.equip_tab[2], UI.Field.Inventory.equip_tab[3]):
-        var.state_inventory = 'equip'
+        elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.equip_tab[0], UI.Field.Inventory.equip_tab[1], UI.Field.Inventory.equip_tab[2], UI.Field.Inventory.equip_tab[3]):
+            var.state_inventory = 'equip'
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.item_tab[0], UI.Field.Inventory.item_tab[1], UI.Field.Inventory.item_tab[2], UI.Field.Inventory.item_tab[3]):
-        var.state_inventory = 'item'
+        elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.item_tab[0], UI.Field.Inventory.item_tab[1], UI.Field.Inventory.item_tab[2], UI.Field.Inventory.item_tab[3]):
+            var.state_inventory = 'item'
 
-    elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.map_tab[0], UI.Field.Inventory.map_tab[1], UI.Field.Inventory.map_tab[2], UI.Field.Inventory.map_tab[3]):
-        var.state_inventory = 'map'
+        elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.map_tab[0], UI.Field.Inventory.map_tab[1], UI.Field.Inventory.map_tab[2], UI.Field.Inventory.map_tab[3]):
+            var.state_inventory = 'map'
+
+        if var.state_inventory == 'deck':
+            if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.add_tab[0], UI.Field.Inventory.add_tab[1], UI.Field.Inventory.add_tab[2], UI.Field.Inventory.add_tab[3]):
+                var.state_inventory = 'deck_create'
+                var.Player_Info.deck_tmp = {'name' : 'New Deck', 'back' : 'basic_1', 'card' : []}
+
+            if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.ok_tab[0], UI.Field.Inventory.ok_tab[1], UI.Field.Inventory.ok_tab[2], UI.Field.Inventory.ok_tab[3]):
+                if var.Player_Info.selected_deck < len(var.Player_Info.deck):
+                    var.Player_Info.battle_deck = var.Player_Info.selected_deck
+
+            for i in range(len(var.Player_Info.deck)):
+                if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.card_list[i][0], UI.Field.Inventory.card_list[i][1], UI.Field.Inventory.card_list[i][2], UI.Field.Inventory.card_list[i][3]):
+                    if i != var.Player_Info.selected_deck and i < len(var.Player_Info.deck):
+                        var.Player_Info.selected_deck = i
+
+                    elif i == var.Player_Info.selected_deck and i < len(var.Player_Info.deck):
+                        var.state_inventory = 'deck_edit'
+                        ff.tmp_deck_copy()
+
+        elif var.state_inventory == 'deck_edit' or var.state_inventory == 'deck_create':
+            if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.add_tab[0], UI.Field.Inventory.add_tab[1], UI.Field.Inventory.add_tab[2], UI.Field.Inventory.add_tab[3]):
+                if var.state_inventory == 'deck_edit':
+                    ff.deck_save(0)
+                else:
+                    ff.deck_save(1)
+
+            elif iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.remove_tab[0], UI.Field.Inventory.remove_tab[1], UI.Field.Inventory.remove_tab[2], UI.Field.Inventory.remove_tab[3]):
+                ff.deck_discard()
+
+            for i in range(8):
+                if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.card_list[i][0], UI.Field.Inventory.card_list[i][1], UI.Field.Inventory.card_list[i][2], UI.Field.Inventory.card_list[i][3]):
+                    if i < len(var.Player_Info.Inventory.card):
+                        ff.add_card_to_deck(var.Player_Info.Inventory.card[i][0])
+                        break
+
+            for i in range(8):
+                if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Inventory.deck_card_list[i][0], UI.Field.Inventory.deck_card_list[i][1], UI.Field.Inventory.deck_card_list[i][2], UI.Field.Inventory.deck_card_list[i][3]):
+                    if i < len(var.Player_Info.deck_tmp['card']):
+                        ff.remove_card_from_deck(i)
+
+    elif var.state == 'shop':
+        for i in range(5):
+            if iff.point_inside_rect(mouse[0], mouse[1], UI.Field.Shop.buy_button[i][0], UI.Field.Shop.buy_button[i][1], UI.Field.Shop.buy_button[i][2], UI.Field.Shop.buy_button[i][3]):
+                ff.buy_item(i)
 
 def key_down_handle():
     if var.Input.Keyboard.key == 105:
         if var.state == 'inventory':
-            var.state = ''
+            if var.state_inventory != 'deck_edit' and var.state_inventory != 'deck_create':
+                var.state = ''
+
         elif var.state == '':
             var.state = 'inventory'
             var.state_inventory = ''
+
+    if var.Input.Keyboard.key == 101:
+        if var.state == '':
+            ff.interaction_handle()
+
+        elif var.state == 'shop':
+            var.state = ''
+            
 
 def key_press_handle():
     direction = {97 : 'left', 100 : 'right', 119 : 'up', 115 : 'down'}

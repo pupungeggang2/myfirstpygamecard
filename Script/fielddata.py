@@ -136,7 +136,9 @@ interaction = {
        [[160, 400], 'dialogue', 1]
     ],
     'field_1' : [],
-    'field_village' : [],
+    'field_village' : [
+        [[560, 1200], 'shop', 1001],
+    ],
     'field_2' : [],
     'field_final' : []
 }

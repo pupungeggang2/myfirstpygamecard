@@ -47,6 +47,7 @@ def image_load():
     card_image[10002] = pygame.image.load('../Image/Card/Card10002.png')
     card_image[10003] = pygame.image.load('../Image/Card/Card10003.png')
     card_image[10004] = pygame.image.load('../Image/Card/Card10004.png')
+    card_image[10101] = pygame.image.load('../Image/Card/Card10101.png')
     card_image[20001] = pygame.image.load('../Image/Card/Card20001.png')
 
     energy['full'] = pygame.image.load('../Image/EnergyOrbFull.png')
@@ -74,3 +75,8 @@ def image_load():
     misc['select_frame'] = pygame.image.load('../Image/SelectFrame.png')
     misc['attack_frame'] = pygame.image.load('../Image/AttackFrame.png')
     misc['gold'] = pygame.image.load('../Image/Gold.png')
+    misc['interaction'] = pygame.image.load('../Image/Terrain/Interaction.png')
+    misc['add'] = pygame.image.load('../Image/Add.png')
+    misc['remove'] = pygame.image.load('../Image/Remove.png')
+    misc['cancel_small'] = pygame.image.load('../Image/CancelSmall.png')
+    misc['ok_small'] = pygame.image.load('../Image/OKSmall.png')

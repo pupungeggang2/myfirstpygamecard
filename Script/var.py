@@ -45,24 +45,27 @@ class Field():
     interaction = []
     connection = []
     enemy = []
+    shop_ID = -1
 
 class Player_Field():
     position = [320, 400]
     face = 'down'
 
     moving = False
-    moved = 0 
+    moved = 0
 
 class Player_Info():
     level = 1
     exp = 0
     exp_max = 20
-    gold = 0
+    gold = 20
 
     skill_tree = []
 
-    deck = [{'name' : 'basic_deck', 'back' : 'basic_1', 'card' : [[10001, 2, 0], [10002, 2, 0], [10003, 2, 0], [10004, 2, 0]]}]
-    selected_deck = 0
+    battle_deck = 0
+    selected_deck = -1
+    deck = [{'name' : 'basic deck', 'back' : 'basic_1', 'card' : [[10001, 2, 0], [10002, 2, 0], [10003, 2, 0], [10004, 2, 0]]}]
+    deck_tmp = {'name' : '', 'back' : 'basic_1', 'card' : []}
 
     class Inventory():
         card = [[10001, 2, 0], [10002, 2, 0], [10003, 2, 0], [10004, 2, 0]]
