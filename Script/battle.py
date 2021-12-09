@@ -23,6 +23,9 @@ def manage():
 
     if var.Animation.attack == True:
         df.attack_animation_handle()
+
+    if var.state == 'enemy_turn':
+        bf.enemy_AI_handle()
         
     scene_change_field()
     display()
@@ -129,9 +132,6 @@ def mouse_up_handle():
 
             if iff.point_inside_rect(mouse[0], mouse[1], UI.Battle.cancel[0], UI.Battle.cancel[1], UI.Battle.cancel[2], UI.Battle.cancel[3]):
                 bf.field_release()
-
-    elif var.state == 'enemy_turn':
-        bf.turn_start()
 
     elif var.state == 'result':
         if iff.point_inside_rect(mouse[0], mouse[1], UI.Battle.Result.button[0], UI.Battle.Result.button[1], UI.Battle.Result.button[2], UI.Battle.Result.button[3]):

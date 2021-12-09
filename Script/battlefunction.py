@@ -96,6 +96,7 @@ def turn_start():
 
 def turn_end():
     var.state = 'enemy_turn'
+    enemy_AI_generate(hd.enemy_hero[var.Enemy_Battle.ID]['AI'])
 
 def draw_card_from_deck():
     if len(var.Player_Battle.deck) > 0:
@@ -144,6 +145,7 @@ def card_play(card, input):
                     'rarity' : card['rarity'],
                     'energy' : card['energy'],
                     'stat' : [card['stat'][0], card['stat'][1], card['stat'][1]],
+                    'status' : '',
                     'effect' : card['effect'],
                     'attack' : 0}
         summon_unit(tmp_unit, input)
@@ -237,3 +239,71 @@ def level_up_handle():
     if var.Player_Info.exp >= var.Player_Info.exp_max:
         var.Player_Info.exp -= var.Player_Info.exp_max
         var.Player_Info.level += 1
+
+def enemy_AI_generate(AI_type):
+    var.Enemy_Battle.AI_action_list = []
+
+    if AI_type == 0:
+        var.Enemy_Battle.AI_action_list.append('summon:20001')
+
+        for i in range(8, 14):
+            if var.Battle.field[i] != None:
+                if var.Battle.field[i]['attack'] > 0:
+                    var.Enemy_Battle.AI_action_list.append('attack:' + str(i) + ':0')
+
+    elif AI_type == 1:
+        var.Enemy_Battle.AI_action_list.append('summon:20002')
+
+        for i in range(8, 14):
+            if var.Battle.field[i] != None:
+                if var.Battle.field[i]['attack'] > 0:
+                    var.Enemy_Battle.AI_action_list.append('attack:' + str(i) + ':0')
+
+def enemy_AI_handle():
+    if len(var.Enemy_Battle.AI_action_list) <= 0:
+        if var.Enemy_Battle.AI_turn_end_tick >= var.FPS * 1:
+            var.Enemy_Battle.AI_turn_end_tick = 0
+            turn_start()
+
+        else:
+            var.Enemy_Battle.AI_turn_end_tick += 1
+
+    else:
+        if var.Enemy_Battle.AI_tick >= var.FPS * 1:
+            tmp_action = var.Enemy_Battle.AI_action_list[0].split(':')
+
+            if len(tmp_action) == 2:
+                if tmp_action[0] == 'summon':
+                    tmp_ID = int(tmp_action[1])
+                    tmp_unit = {'ID' : tmp_ID,
+                                'type' : cd.card[tmp_ID]['type'],
+                                'name' : cd.card[tmp_ID]['name'],
+                                'element' : cd.card[tmp_ID]['element'],
+                                'rarity' : cd.card[tmp_ID]['rarity'],
+                                'energy' : cd.card[tmp_ID]['energy'],
+                                'stat' : [cd.card[tmp_ID]['stat'][0], cd.card[tmp_ID]['stat'][1], cd.card[tmp_ID]['stat'][1]],
+                                'status' : '',
+                                'effect' : cd.card[tmp_ID]['effect'],
+                                'attack' : 0}
+
+                    summon_unit_auto(tmp_unit, 1)
+
+            elif len(tmp_action) == 3:
+                if tmp_action[0] == 'attack':
+                    f = int(tmp_action[1])
+                    t = int(tmp_action[2])
+
+                    if attack_validation_check(f, t) == True:
+                        attack(f, t)
+
+                        var.Animation.attack = True
+                        var.Animation.attack_tick = 0
+                        var.Animation.attack_frame = 0
+                        var.Animation.attack_position_1 = f
+                        var.Animation.attack_position_2 = t
+
+            var.Enemy_Battle.AI_action_list.pop(0)
+            var.Enemy_Battle.AI_tick = 0
+
+        else:
+            var.Enemy_Battle.AI_tick += 1

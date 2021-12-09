@@ -49,6 +49,7 @@ def image_load():
     card_image[10004] = pygame.image.load('../Image/Card/Card10004.png')
     card_image[10101] = pygame.image.load('../Image/Card/Card10101.png')
     card_image[20001] = pygame.image.load('../Image/Card/Card20001.png')
+    card_image[20002] = pygame.image.load('../Image/Card/Card20002.png')
 
     energy['full'] = pygame.image.load('../Image/EnergyOrbFull.png')
     energy['empty'] = pygame.image.load('../Image/EnergyOrbEmpty.png')

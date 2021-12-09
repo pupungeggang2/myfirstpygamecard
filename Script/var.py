@@ -93,6 +93,10 @@ class Player_Battle():
 class Enemy_Battle():
     ID = 0
     AI_type = 0
+    AI_action_list = []
+    AI_tick = 0
+    AI_turn_end = False
+    AI_turn_end_tick = 0
     
 class Battle():
     turn_number = 0
