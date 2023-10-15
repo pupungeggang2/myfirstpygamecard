@@ -19,7 +19,9 @@ def display():
     var.screen.blit(design.Font.title.render('Dessert Card RPG', True, design.Color.black), UI.title_text)
     
     pygame.draw.rect(var.screen, design.Color.black, UI.Title.new_game_button, 2)
+    var.screen.blit(design.Font.title.render('New', True, design.Color.black), UI.Title.new_game_text)
     pygame.draw.rect(var.screen, design.Color.black, UI.Title.load_game_button, 2)
+    var.screen.blit(design.Font.title.render('Load', True, design.Color.black), UI.Title.load_game_text)
 
     pygame.display.flip()
 

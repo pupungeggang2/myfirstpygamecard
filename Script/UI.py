@@ -3,7 +3,9 @@ center = [560, 320]
 
 class Title():
     new_game_button = [1040, 560, 160, 80]
+    new_game_text = [1048, 568]
     load_game_button = [1040, 640, 160, 80]
+    load_game_text = [1048, 648]
 
 class Card():
     energy_text = [14, 8]
