@@ -114,11 +114,11 @@ def inventory_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Field.Inventory.player_info)
     pygame.draw.rect(var.screen, design.Color.black, UI.Field.Inventory.player_info, 2)
 
-    var.screen.blit(img.inventory_tab['skill'], UI.Field.Inventory.skill_tab)
+    #var.screen.blit(img.inventory_tab['skill'], UI.Field.Inventory.skill_tab)
     var.screen.blit(img.inventory_tab['card'], UI.Field.Inventory.card_tab)
     var.screen.blit(img.inventory_tab['deck'], UI.Field.Inventory.deck_tab)
-    var.screen.blit(img.inventory_tab['equip'], UI.Field.Inventory.equip_tab)
-    var.screen.blit(img.inventory_tab['item'], UI.Field.Inventory.item_tab)
+    #var.screen.blit(img.inventory_tab['equip'], UI.Field.Inventory.equip_tab)
+    #var.screen.blit(img.inventory_tab['item'], UI.Field.Inventory.item_tab)
     var.screen.blit(img.inventory_tab['map'], UI.Field.Inventory.map_tab)
 
     pygame.draw.rect(var.screen, design.Color.white, UI.Field.Inventory.content)
@@ -247,6 +247,7 @@ def battle_start_display():
 
     pygame.draw.rect(var.screen, design.Color.yellow, UI.Battle.Start.start_button)
     pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Start.start_button, 2)
+    var.screen.blit(design.Font.normal_text_large.render('OK', False, design.Color.black), UI.Battle.Start.start_text)
 
 def battle_result_display():
     pygame.draw.rect(var.screen, design.Color.white, UI.Battle.Result.rect)
@@ -257,6 +258,7 @@ def battle_result_display():
 
     pygame.draw.rect(var.screen, design.Color.yellow, UI.Battle.Result.button)
     pygame.draw.rect(var.screen, design.Color.black, UI.Battle.Result.button, 2)
+    var.screen.blit(design.Font.normal_text_large.render('Continue', True, design.Color.black), UI.Battle.Result.continue_text)
 
 def battle_field_display():
     for i in range(14):
